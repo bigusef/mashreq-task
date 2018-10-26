@@ -1,7 +1,167 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block page_title %}{block.super} | Dashboard{% endblock %}
+{% block page_title %}{{ block.super }} | Dashboard{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'flags/sprite.css' %}">
+{% endblock %}
 
 {% block content %}
-<h1>Dashboard</h1>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="accordion col-md-7 col-sm-10" id="employeeList">
+                {% for emp in employee_list %}
+                    <div class="card">
+                        <div class="card-header" id="heading{{ emp.pk }}">
+                            <h5 class="mb-0 d-flex align-items-center">
+                                <button class="btn btn-link"
+                                        type="button"
+                                        data-toggle="collapse"
+                                        data-target="#list{{ emp.pk }}" aria-expanded="true"
+                                        aria-controls="list{{ emp.pk }}">
+                                    {{ emp.full_name }}
+                                </button>
+                                <small class="text-muted ml-auto">{{ emp.position }}</small>
+                            </h5>
+                        </div>
+
+                        <div id="list{{ emp.pk }}"
+                             class="collapse"
+                             aria-labelledby="heading{{ emp.pk }}"
+                             data-parent="#employeeList">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="media">
+                                                <div class="align-self-end mr-3">
+                                                    <strong>First Name</strong>
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="m-0">{{ emp.first_name }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="media">
+                                                <div class="align-self-end mr-3">
+                                                    <strong>Last Name</strong>
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="m-0">{{ emp.last_name }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="media">
+                                                <div class="align-self-end mr-3">
+                                                    <strong>Date of Birth</strong>
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="m-0">{{ emp.birth_date }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="media">
+                                                <div class="align-self-end mr-3">
+                                                    <strong>Age</strong>
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="m-0">{{ emp.age }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="media">
+                                                <div class="align-self-end mr-3">
+                                                    <strong>Place of Birth</strong>
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="m-0">{{ emp.birth_place }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="media">
+                                                <div class="align-self-end mr-3">
+                                                    <strong>National Identifier</strong>
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="m-0">{{ emp.identifier }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="media">
+                                                <div class="align-self-end mr-3">
+                                                    <strong>Country</strong>
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="m-0">
+                                                        <i class="flag2x {{ emp.country.flag_css }}"></i>
+                                                        <span>{{ emp.country.name }}</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="media">
+                                                <div class="align-self-end mr-3">
+                                                    <strong>Nationality</strong>
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="m-0">
+                                                        <i class="flag2x {{ emp.nationality.flag_css }}"></i>
+                                                        <span>{{ emp.nationality.name }}</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="media">
+                                                <div class="align-self-end mr-3">
+                                                    <strong>Gender</strong>
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="m-0">{{ emp.get_gender_display }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="media">
+                                                <div class="align-self-end mr-3">
+                                                    <strong>Marital State</strong>
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="m-0">{{ emp.get_marital_status_display }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

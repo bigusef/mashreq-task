@@ -1,4 +1,25 @@
 .wrapper {
     overflow-y: hidden;
     overflow-x: hidden;
+    padding-top: 65px;
+    padding-bottom: 65px;
+}
+
+.small, small {
+    font-size: 70%;
+    font-weight: 400;
+}
+
+.company-brand {
+    font-weight: bold;
+    color: #333;
+}
+
+.navbar-brand {
+    color: #333;
+}
+
+.creator {
+    font-size: 16px;
+    color: #555555;
 }

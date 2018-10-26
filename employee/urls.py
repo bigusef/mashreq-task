@@ -1,12 +1,11 @@
-from django.conf import settings
-from django.conf.urls.static import static
 from django.urls import path
-from django.views.generic import TemplateView
+
+from .views import DashboardView
 
 app_name = 'employee'
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='employee/dashboard.html'), name='dashboard')
+    path('', DashboardView.as_view(), name='dashboard')
 ]
 
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
