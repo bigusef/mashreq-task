@@ -1,0 +1,51 @@
+### System Files ###
+.DS_Store
+Thumbs.db
+.AppleDouble
+.LSOverride
+._*
+
+### Visual Studio Code ###
+.vscode/
+
+### JetBrains ###
+.idea/
+
+### SublimeText ###
+*.sublime-project
+*.sublime-workspace
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+*$py.class
+# Environments
+.env
+venv
+# C extensions
+*.so
+# Translations
+*.mo
+*.pot
+# pyenv
+.python-version
+
+### Django ###
+*.log
+*.pot
+*/settings/local.py
+*.sqlite3
+media/
+staticfiles/
+
+### Flask ###
+instance/
+.webassets-cache
+
+### SASS and SCSS ###
+.sass-cache/
+*.css.map
+
+### NodeJS ###
+/node_modules
+/build
