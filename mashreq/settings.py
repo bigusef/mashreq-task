@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     # third-party app
     'django_countries',
+    'import_export',
 
     # project app
     'employee'
@@ -121,3 +122,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True
