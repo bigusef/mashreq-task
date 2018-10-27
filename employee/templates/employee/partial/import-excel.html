@@ -11,12 +11,11 @@
             <form action="{% url 'employee:load_excel' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="modal-body">
-                        <input type="file" name="emp_file">
-{#                    <div class="custom-file">#}
-{#                        <input type="file" class="custom-file-input" name="excel">#}
-{#                        <label class="custom-file-label" for="customFile">Choose file</label>#}
-{#                    </div>#}
-{#                    <small class="form-text text-muted">Choose Excel file to upload and import all employee data</small>#}
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="emp_file" name="emp_file">
+                        <label class="custom-file-label" for="emp_file">Choose file</label>
+                    </div>
+                    <small class="form-text text-muted">Choose Excel file to upload and import all employee data</small>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>

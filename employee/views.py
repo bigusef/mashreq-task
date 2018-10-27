@@ -1,10 +1,8 @@
 from django.views.generic import ListView, View
 from django.shortcuts import redirect
+from tablib import Dataset
 
 from .models import Employee
-
-from django.http import HttpResponse
-from tablib import Dataset
 from .resources import EmployeeResource
 
 
@@ -38,7 +36,6 @@ class LoadExcelView(View):
         new_persons = request.FILES['emp_file']
         dataset.load(new_persons.read())
         result = resource.import_data(dataset, dry_run=True)
-        print(result)
         if not result.has_errors():
             resource.import_data(dataset, dry_run=False)
         return redirect('employee:dashboard')
