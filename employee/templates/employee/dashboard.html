@@ -231,15 +231,18 @@
                                 <li class="list-group-item">
                                     <div class="row">
                                         <div class="col-6">
-                                            <button type="button"  name="button"
-                                                    class="btn btn-primary btn-sm">
+                                            <a class="btn btn-primary btn-sm edit-employee"
+                                               href="#"
+                                               data-form="{% url 'employee:update' emp.pk %}">
                                                 <i class="far fa-edit"></i>
                                                 <span>Edit</span>
-                                            </button>
+                                            </a>
                                         </div>
                                         <div class="col-6 text-right">
                                             <button type="button"
-                                                    class="btn btn-danger btn-sm">
+                                                    class="btn btn-danger btn-sm"
+                                                    data-toggle="modal"
+                                                    data-target="#deleteModal">
                                                 <i class="fas fa-trash-alt"></i>
                                                 <span>Delete</span>
                                             </button>
@@ -254,6 +257,12 @@
         </div>
     </div>
 
+    <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
     {% include 'employee/partial/import-excel.html' %}
 {% endblock %}
 
@@ -262,7 +271,31 @@
     <script>
        $(function () {
           'use strict';
+          $(".edit-employee").click(function (ev) { // for each edit contact url
+             ev.preventDefault(); // prevent navigation
+             var url = $(this).data("form"); // get the contact form url
+             $("#Modal .modal-content").load(url, function () { // load the url into the modal
+                $('#Modal').modal('show'); // display the modal on url load
+             });
+             return false; // prevent the click propagation
+          });
 
+          $('.edit-form').on('submit', function () {
+             console.log('submited');
+             $.ajax({
+                type: $(this).attr('method'),
+                url: this.action,
+                data: $(this).serialize(),
+                context: this,
+                success: function (data, status) {
+                   console.log(data, status)
+                },
+                error: function (meg) {
+                   console.log(meg)
+                }
+             });
+             return false;
+          });
        });
     </script>
 {% endblock %}

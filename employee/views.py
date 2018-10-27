@@ -1,3 +1,4 @@
+from django.urls import reverse_lazy
 from django.views.generic import View, ListView, UpdateView
 from django.shortcuts import redirect
 from tablib import Dataset
@@ -27,8 +28,10 @@ class DashboardView(ListView):
 
 
 class UpdateEmployeeView(UpdateView):
+    template_name = 'employee/partial/edit.html'
     model = Employee
     fields = '__all__'
+    success_url = reverse_lazy('employee:dashboard')
 
 
 class LoadExcelView(View):

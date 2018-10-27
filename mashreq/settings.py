@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # third-party app
-    'widget_tweaks',
     'django_countries',
     'import_export',
 
