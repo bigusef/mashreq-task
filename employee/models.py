@@ -20,12 +20,14 @@ class Employee(models.Model):
     marital_status = models.CharField(max_length=1, choices=MARITAL_CHOICES)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
 
+    @property
     def full_name(self):
         if self.middle_name:
             return ' '.join([self.first_name, self.middle_name, self.last_name])
         else:
             return ' '.join([self.first_name, self.last_name])
 
+    @property
     def age(self):
         today = date.today()
         return today.year - self.birth_date.year - (
@@ -33,4 +35,4 @@ class Employee(models.Model):
         )
 
     def __str__(self):
-        return self.full_name()
+        return self.full_name
