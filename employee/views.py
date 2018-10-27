@@ -1,4 +1,4 @@
-from django.views.generic import ListView, View
+from django.views.generic import View, ListView, UpdateView
 from django.shortcuts import redirect
 from tablib import Dataset
 
@@ -23,8 +23,12 @@ class DashboardView(ListView):
             context = Employee.objects.order_by(order)
         if selected_txt:
             context = context.filter(position__contains=selected_txt)
-            print(self.request.page_obj)
         return context
+
+
+class UpdateEmployeeView(UpdateView):
+    model = Employee
+    fields = '__all__'
 
 
 class LoadExcelView(View):
