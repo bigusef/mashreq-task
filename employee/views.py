@@ -7,6 +7,7 @@ class DashboardView(ListView):
     template_name = 'employee/dashboard.html'
     model = Employee
     context_object_name = 'employee_list'
+    paginate_by = 5
 
     def get_queryset(self):
         order = self.request.GET.get('orderby', 'pk')
@@ -19,4 +20,5 @@ class DashboardView(ListView):
             context = Employee.objects.order_by(order)
         if selected_txt:
             context = context.filter(position__contains=selected_txt)
+            print(self.request.page_obj)
         return context
