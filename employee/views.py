@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.views.generic import View, ListView, UpdateView
+from django.views.generic import View, ListView, CreateView, UpdateView, DeleteView
 from django.shortcuts import redirect
 from tablib import Dataset
 
@@ -27,10 +27,23 @@ class DashboardView(ListView):
         return context
 
 
+class CreateEmployeeView(CreateView):
+    template_name = 'employee/partial/add.html'
+    model = Employee
+    fields = '__all__'
+    success_url = reverse_lazy('employee:dashboard')
+
+
 class UpdateEmployeeView(UpdateView):
     template_name = 'employee/partial/edit.html'
     model = Employee
     fields = '__all__'
+    success_url = reverse_lazy('employee:dashboard')
+
+
+class DeleteEmployeeView(DeleteView):
+    template_name = 'employee/partial/delete.html'
+    model = Employee
     success_url = reverse_lazy('employee:dashboard')
 
 

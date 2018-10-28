@@ -22,10 +22,12 @@
                 </button>
             </div>
             <div class="col-auto">
-                <button type="button" class="btn " data-toggle="modal" data-target="#exampleModal">
+                <a class="btn btn-link add-employee"
+                   href="#"
+                   data-form="{% url 'employee:add' %}">
                     <i class="fas fa-plus"></i>
                     <span>Add New</span>
-                </button>
+                </a>
             </div>
         </div>
 
@@ -239,13 +241,12 @@
                                             </a>
                                         </div>
                                         <div class="col-6 text-right">
-                                            <button type="button"
-                                                    class="btn btn-danger btn-sm"
-                                                    data-toggle="modal"
-                                                    data-target="#deleteModal">
+                                            <a class="btn btn-danger btn-sm delete-employee"
+                                               href="#"
+                                               data-form="{% url 'employee:delete' emp.pk %}">
                                                 <i class="fas fa-trash-alt"></i>
                                                 <span>Delete</span>
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </li>
@@ -271,22 +272,11 @@
     <script>
        $(function () {
           'use strict';
-          $(".edit-employee").click(function (ev) {
-             ev.preventDefault();
-             var url = $(this).data("form");
+          $(".add-employee, .edit-employee, .delete-employee").click(function (e) {
+             e.preventDefault();
+             const url = $(this).data("form");
              $("#Modal .modal-content").load(url, function () {
                 $('#Modal').modal('show');
-             });
-             return false;
-          });
-
-          $('.edit-form').on('submit', function () {
-             console.log('submited');
-             $.ajax({
-                type: $(this).attr('method'),
-                url: this.action,
-                data: $(this).serialize(),
-                context: this,
              });
              return false;
           });
