@@ -31,7 +31,7 @@ class Employee(models.Model):
     def age(self):
         today = date.today()
         return today.year - self.birth_date.year - (
-                    (today.month, today.day) < (self.birth_date.month, self.birth_date.day)
+                (today.month, today.day) < (self.birth_date.month, self.birth_date.day)
         )
 
     def __str__(self):
@@ -47,3 +47,56 @@ class Jobs(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Salary(models.Model):
+    def __init__(self, *args, **kwargs):
+        self.__tax_rate = 0.05
+        super(Salary, self).__init__(*args, **kwargs)
+
+    employee = models.OneToOneField(Employee, on_delete=models.CASCADE)
+    main_salary = models.IntegerField(default=0)
+    total_earnings = models.IntegerField()
+    total_deductions = models.IntegerField()
+    updated = models.DateTimeField(auto_now=True)
+
+    @property
+    def total_salary(self):
+        extra = self.total_earnings - self.total_deductions
+        res = self.main_salary + extra
+        return res
+
+    @property
+    def taxable_salary(self):
+        res = self.total_salary * self.__tax_rate
+        return res
+
+    @property
+    def net_salary(self):
+        res = self.total_salary - self.taxable_salary
+        return res
+
+    def __str__(self):
+        return self.employee.full_name
+
+
+class Earnings(models.Model):
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    amount = models.IntegerField()
+    description = models.TextField()
+    date = models.DateField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.employee.full_name
+
+
+class Deductions(models.Model):
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    amount = models.IntegerField()
+    description = models.TextField()
+    date = models.DateField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.employee.full_name
