@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import View, ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import View, ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.shortcuts import redirect
 from tablib import Dataset
 
@@ -60,3 +60,9 @@ class LoadExcelView(LoginRequiredMixin, View):
         if not result.has_errors():
             resource.import_data(dataset, dry_run=False)
         return redirect('employee:dashboard')
+
+
+class SalaryDetailView(LoginRequiredMixin, DetailView):
+    login_url = reverse_lazy('admin:login')
+    template_name = 'employee/salary-detials.html'
+    model = Employee
