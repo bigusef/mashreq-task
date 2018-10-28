@@ -27,3 +27,7 @@
 .time-since {
     font-size: 12px;
 }
+.load-employee:hover,
+.add-employee:hover {
+    text-decoration: none;
+}

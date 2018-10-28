@@ -55,6 +55,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+LOGIN_URL = 'admin:login.html'
 ROOT_URLCONF = 'mashreq.urls'
 
 TEMPLATES = [

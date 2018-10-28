@@ -16,17 +16,27 @@
                 </h3>
             </div>
             <div class="col-auto ml-auto">
-                <button type="button" class="btn" data-toggle="modal" data-target="#importExcel">
+                <a class="btn btn-link text-secondary load-employee"
+                   href="#"
+                   data-form="{% url 'employee:load_excel' %}">
                     <i class="far fa-file-excel"></i>
-                    <span>Import from Excel File</span>
-                </button>
+                    <span>Import from File</span>
+                </a>
             </div>
             <div class="col-auto">
-                <a class="btn btn-link add-employee"
+                <a class="btn btn-link text-secondary add-employee"
                    href="#"
                    data-form="{% url 'employee:add' %}">
                     <i class="fas fa-plus"></i>
                     <span>Add New</span>
+                </a>
+            </div>
+            <div class="col-auto">
+                <a class="btn btn-link text-secondary add-employee"
+                   href="#"
+                   data-form="{% url 'employee:add' %}">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Add More</span>
                 </a>
             </div>
         </div>
@@ -61,26 +71,6 @@
                 </form>
             </div>
         </div>
-
-        {% if is_paginated %}
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    {% if page_obj.has_previous %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-                        </li>
-                    {% endif %}
-                    <li class="page-item active">
-                        <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-                    </li>
-                    {% if page_obj.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </nav>
-        {% endif %}
 
         <div class="row justify-content-center">
             <div class="accordion col-md-7 col-sm-10" id="employeeList">
@@ -256,15 +246,47 @@
                 {% endfor %}
             </div>
         </div>
+
+        {% if is_paginated %}
+            <nav aria-label="Page navigation">
+                <ul class="pagination pt-3">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                        </li>
+                    {% endif %}
+                    <li class="page-item active">
+                        <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                    </li>
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+
     </div>
 
     <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Login Required to make Action</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="lead text-danger">You must be Authorized to can make any action, please login first</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'admin:login' %}" class="btn btn-primary">Login</a>
+                </div>
+            </div>
         </div>
     </div>
-
-    {% include 'employee/partial/import-excel.html' %}
 {% endblock %}
 
 
@@ -272,12 +294,16 @@
     <script>
        $(function () {
           'use strict';
-          $(".add-employee, .edit-employee, .delete-employee").click(function (e) {
+          $(".load-employee, .add-employee, .edit-employee, .delete-employee").click(function (e) {
              e.preventDefault();
-             const url = $(this).data("form");
-             $("#Modal .modal-content").load(url, function () {
+             {% if request.user.is_authenticated %}
+                const url = $(this).data("form");
+                $("#Modal .modal-content").load(url, function () {
+                   $('#Modal').modal('show');
+                });
+             {% else %}
                 $('#Modal').modal('show');
-             });
+             {% endif %}
              return false;
           });
        });
