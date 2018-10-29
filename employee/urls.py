@@ -1,6 +1,7 @@
 from django.urls import path
 
-from .views import DashboardView, LoadExcelView, CreateEmployeeView, UpdateEmployeeView, DeleteEmployeeView, SalaryDetailView
+from .views import DashboardView, LoadExcelView, CreateEmployeeView, UpdateEmployeeView, DeleteEmployeeView, \
+    SalaryDetailView, SendReportView
 
 app_name = 'employee'
 
@@ -11,4 +12,5 @@ urlpatterns = [
     path('delete/<int:pk>', DeleteEmployeeView.as_view(), name='delete'),
     path('salary/<int:pk>', SalaryDetailView.as_view(), name='salary'),
     path('load-excel/', LoadExcelView.as_view(), name='load_excel'),
+    path('send-report/<int:pk>', SendReportView.as_view(), name='send_report')
 ]

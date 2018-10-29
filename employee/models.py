@@ -55,9 +55,9 @@ class Salary(models.Model):
         super(Salary, self).__init__(*args, **kwargs)
 
     employee = models.OneToOneField(Employee, on_delete=models.CASCADE)
-    main_salary = models.IntegerField(default=0)
-    total_earnings = models.IntegerField()
-    total_deductions = models.IntegerField()
+    main_salary = models.IntegerField()
+    total_earnings = models.IntegerField(default=0)
+    total_deductions = models.IntegerField(default=0)
     updated = models.DateTimeField(auto_now=True)
 
     @property

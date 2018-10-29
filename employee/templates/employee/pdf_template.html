@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Title</title>
+    <style type="text/css">
+        body {
+            font-weight: 200;
+            font-size: 14px;
+        }
+
+        .header {
+            font-size: 20px;
+            font-weight: 100;
+            text-align: center;
+            color: #007cae;
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+    <div class='header'>
+        <p class='title'>Pay Slip for {{ employee.full_name }}</p>
+    </div>
+    <div>
+        <h4 class="d-flex align-items-center justify-content-between">
+                    <span>Salary Total</span>
+                    <span style="font-size: 14px">Last Updated <small>{{ employee.salary.updated|timesince }}</small></span>
+                </h4>
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label">Main Salary</label>
+                    <div class="col-sm-7">
+                        <span class="form-control-plaintext">{{ employee.salary.main_salary }}</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label">Total Earnings</label>
+                    <div class="col-sm-7">
+                        <span class="form-control-plaintext">{{ employee.salary.total_earnings }}</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label">Total Deductions</label>
+                    <div class="col-sm-7">
+                        <span class="form-control-plaintext">{{ employee.salary.total_deductions }}</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label">Total Salary</label>
+                    <div class="col-sm-7">
+                        <span class="form-control-plaintext">{{ employee.salary.total_salary }}</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label">Taxable Salary</label>
+                    <div class="col-sm-7">
+                        <span class="form-control-plaintext">{{ employee.salary.taxable_salary }}</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label">Net Salary</label>
+                    <div class="col-sm-7">
+                        <span class="form-control-plaintext">{{ employee.salary.net_salary }}</span>
+                    </div>
+                </div>
+    </div>
+</body>
+</html>

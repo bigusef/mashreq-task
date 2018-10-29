@@ -3,9 +3,134 @@
 {% block page_title %}{{ block.super }} | Salary Details{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <h1>Salary Details</h1>
+    <div class="container-fluid">
+        <h1 class='h3 text-center pb-3'>
+            <span>Salary Details</span>
+            <small>{{ employee.full_name }}</small>
+        </h1>
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <h4 class="d-flex align-items-center justify-content-between">
+                    <span>Salary Total</span>
+                    <span style="font-size: 14px">Last Updated <small>{{ employee.salary.updated|timesince }}</small></span>
+                </h4>
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label">Main Salary</label>
+                    <div class="col-sm-7">
+                        <span class="form-control-plaintext">{{ object.salary.main_salary }}</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label">Total Earnings</label>
+                    <div class="col-sm-7">
+                        <span class="form-control-plaintext">{{ object.salary.total_earnings }}</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label">Total Deductions</label>
+                    <div class="col-sm-7">
+                        <span class="form-control-plaintext">{{ object.salary.total_deductions }}</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label">Total Salary</label>
+                    <div class="col-sm-7">
+                        <span class="form-control-plaintext">{{ object.salary.total_salary }}</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label">Taxable Salary</label>
+                    <div class="col-sm-7">
+                        <span class="form-control-plaintext">{{ object.salary.taxable_salary }}</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label">Net Salary</label>
+                    <div class="col-sm-7">
+                        <span class="form-control-plaintext">{{ object.salary.net_salary }}</span>
+                    </div>
+                </div>
+            </div>
+
+            {% if employee.earnings_set.count > 0 %}
+                <div class="col-4">
+                    <h4 class="d-flex align-items-center justify-content-between">Earnings</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for earn in employee.earnings_set.all %}
+                                <tr>
+                                    <th scope="row">{{ earn.date|date:'d-m' }}</th>
+                                    <td>{{ earn.amount }}</td>
+                                    <td>{{ earn.description }}</td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if employee.deductions_set.count > 0 %}
+                <div class="col-">
+                    <h4 class="d-flex align-items-center justify-content-between">Deductions</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for deduc in employee.deductions_set.all %}
+                                <tr>
+                                    <th scope="row">{{ deduc.date|date:'d-m' }}</th>
+                                    <td>{{ deduc.amount }}</td>
+                                    <td>{{ deduc.description }}</td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="row justify-content-center align-items-right">
+            <div class="col-5 text-center">
+                <form method="post" target="_blank">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Show Report As PDF File</button>
+                </form>
+            </div>
+            <div class="col-7">
+                <form action="{% url 'employee:send_report' employee.pk %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input name="email" type="email" class="form-control" placeholder="Email Address"
+                               aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">
+                                Send Email
+                            </button>
+                        </div>
+                    </div>
+                    <small class="form-text text-muted">
+                        Type Email to send the report to this email
+                    </small>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock %}

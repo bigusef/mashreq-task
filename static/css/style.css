@@ -31,3 +31,9 @@
 .add-employee:hover {
     text-decoration: none;
 }
+
+.table-responsive {
+    height: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
