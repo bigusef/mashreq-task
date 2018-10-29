@@ -99,6 +99,6 @@ class SendReportView(View):
         email_from = 'e@g.com'
 
         mail = EmailMessage(subject, message, email_from, recipient)
-        mail.attach_file(pdf)
+        mail.attach('Salary Details.pdf', pdf.content)
         mail.send()
         return redirect('employee:dashboard')
