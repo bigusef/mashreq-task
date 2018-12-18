@@ -30,7 +30,6 @@ venv
 # pyenv
 .python-version
 
-
 ### Django ###
 *.log
 *.pot
